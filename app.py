@@ -1,5 +1,10 @@
 import os
+import pandas as pd
 from datetime import datetime
+import pandas as pd
+import pandas_datareader as pdr
+import datetime as datetime
+import matplotlib.pyplot as plt
 
 from flask import Flask, abort, request
 
@@ -34,6 +39,10 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     get_message = event.message.text
+    stock_number = '"event.message.text"+".TW"'
+    start = datetime.datetime(2022,7,1)
+    end   = datetime.datetime(2022,7,31)
+    pd= pdr.DataReader(stock_number, 'yahoo', start, end)
 
     # Send To Line
     reply = TextSendMessage(text=f"{get_message}")
